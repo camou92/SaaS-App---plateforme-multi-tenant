@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: saas-back
-          image: backend-saas-app:latest
+          image: camoudock/backend-saas-app:cde24f113885fe82fe7739a3f6effec68076bd95
           imagePullPolicy: IfNotPresent
 
           ports:
