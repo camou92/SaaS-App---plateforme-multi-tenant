@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: frontend-ui
-          image: multy-tenancy-frontend-ui:latest
+          image: camoudock/multy-tenancy-frontend-ui:ede363e2065fad7d6259a59c8de8cb93583554fa
           imagePullPolicy: Never
 
           ports:
