@@ -1,0 +1,138 @@
+services:
+  postgres-saas:
+    image: postgres:17.5
+    container_name: saas-db
+    environment:
+      POSTGRES_DB: ${DB_NAME:-saas-app-db}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      PGDATA: /var/lib/postgresql/data/data
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - postgres_saas:/var/lib/postgresql/data/data
+    networks:
+      - saas-app-network
+    restart: unless-stopped
+
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    container_name: postgres-exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://postgres:postgres@saas-db:5432/saas-app-db?sslmode=disable"
+    ports:
+      - "9187:9187"
+    networks:
+      - saas-app-network
+    depends_on:
+      - postgres-saas
+
+  saas-back:
+    container_name: saas-back
+    build: ./saas-app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ${JWT_CERTS_DIR:-~/secrets/saas-app-certs}:/app/certs:ro
+    environment:
+      JWT_PRIVATE_KEY_PATH: /app/certs/private_key.pem
+      JWT_PUBLIC_KEY_PATH: /app/certs/public_key.pem
+    env_file:
+      - ./saas-app/.env
+    depends_on:
+      - postgres-saas
+    restart: unless-stopped
+    networks:
+      - saas-app-network
+
+  frontend-ui:
+    container_name: frontend-ui
+    build: ./saas-app-ui
+    ports:
+      - "8083:80"
+    depends_on:
+      - saas-back
+    restart: unless-stopped
+    networks:
+      - saas-app-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./alert.rules.yml:/etc/prometheus/alert.rules.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - saas-app-network
+    depends_on:
+      - alertmanager
+      - postgres-exporter
+      - saas-back
+      - blackbox-exporter
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: alertmanager
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    ports:
+      - "9093:9093"
+    networks:
+      - saas-app-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+      - tempo
+      - my-loki
+    networks:
+      - saas-app-network
+
+  tempo:
+    image: grafana/tempo:latest
+    container_name: tempo
+    ports:
+      - "3200:3200"
+      - "4317:4317"
+    command: [ "--config.file=/etc/tempo/config.yaml" ]
+    volumes:
+      - ./tempo.yaml:/etc/tempo/config.yaml
+    networks:
+      - saas-app-network
+
+  my-loki:
+    image: grafana/loki:main
+    container_name: my-loki
+    command: [ "-config.file=/etc/loki/local-config.yaml" ]
+    ports:
+      - "3100:3100"
+    networks:
+      - saas-app-network
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter:latest
+    container_name: blackbox-exporter
+    ports:
+      - "9115:9115"
+    networks:
+      - saas-app-network
+
+volumes:
+  postgres_saas:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  saas-app-network:
+    driver: bridge

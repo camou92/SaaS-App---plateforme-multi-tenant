@@ -1,0 +1,84 @@
+<div class="manage-wrapper">
+
+  <div class="manage-header">
+    <div class="page-icon icon-orange"><i class="pi pi-user"></i></div>
+    <div>
+      <h2>{{ userId ? 'Edit User' : 'New User' }}</h2>
+      <p>{{ userId ? 'Update team member details' : 'Invite a new team member' }}</p>
+    </div>
+  </div>
+
+  <div class="manage-card">
+    <div class="form-fields">
+
+      <div class="form-field">
+        <label class="field-label">Role</label>
+        <p-select
+          [options]="roles"
+          [(ngModel)]="selectedRole"
+          placeholder="Select a role"
+          [style]="{'width': '100%'}"
+        />
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <p-floatlabel variant="on">
+            <input pInputText id="firstName" name="firstName" [(ngModel)]="userRequest.firstName" autocomplete="off" class="full-width-input" />
+            <label for="firstName">First Name</label>
+          </p-floatlabel>
+          @if (hasError('firstName')) {
+            <small class="field-error">{{ getErrorMsg('firstName') }}</small>
+          }
+        </div>
+        <div class="form-field">
+          <p-floatlabel variant="on">
+            <input pInputText id="lastName" name="lastName" [(ngModel)]="userRequest.lastName" autocomplete="off" class="full-width-input" />
+            <label for="lastName">Last Name</label>
+          </p-floatlabel>
+          @if (hasError('lastName')) {
+            <small class="field-error">{{ getErrorMsg('lastName') }}</small>
+          }
+        </div>
+      </div>
+
+      <div class="form-field">
+        <p-floatlabel variant="on">
+          <input pInputText id="email" name="email" [(ngModel)]="userRequest.email" autocomplete="off" class="full-width-input" />
+          <label for="email">Email</label>
+        </p-floatlabel>
+        @if (hasError('email')) {
+          <small class="field-error">{{ getErrorMsg('email') }}</small>
+        }
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <p-floatlabel variant="on">
+            <input pInputText id="username" name="username" [(ngModel)]="userRequest.username" autocomplete="off" class="full-width-input" />
+            <label for="username">Username</label>
+          </p-floatlabel>
+          @if (hasError('username')) {
+            <small class="field-error">{{ getErrorMsg('username') }}</small>
+          }
+        </div>
+        <div class="form-field">
+          <p-floatlabel variant="on">
+            <input pInputText type="password" id="password" name="password" [(ngModel)]="userRequest.password" autocomplete="off" class="full-width-input" />
+            <label for="password">Password</label>
+          </p-floatlabel>
+          @if (hasError('password')) {
+            <small class="field-error">{{ getErrorMsg('password') }}</small>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <p-button [label]="userId ? 'Update User' : 'Create User'" icon="pi pi-check" (onClick)="saveUser()" />
+      <p-button label="Cancel" variant="outlined" severity="secondary" (onClick)="backToUserList()" />
+    </div>
+  </div>
+
+</div>

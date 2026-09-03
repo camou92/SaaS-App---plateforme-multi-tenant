@@ -1,0 +1,44 @@
+<p-toast position="top-right" />
+<div>
+  <h1>Manage Category</h1>
+  <div class="flex flex-column gap-3">
+    <div>
+      <p-floatLabel variant="on">
+        <input
+          pInputText
+          id="name"
+          name="name"
+          [(ngModel)]="categoryRequest.name"
+          autocomplete="off"
+        />
+        <label for="name">Category name</label>
+      </p-floatLabel>
+      @if (hasError('name')) {
+        <small class="field-error">{{ getErrorMsg('name') }}</small>
+      }
+    </div>
+    <div>
+      <p-floatLabel variant="on">
+        <input
+          pInputText
+          id="description"
+          name="description"
+          [(ngModel)]="categoryRequest.description"
+          autocomplete="off"
+        />
+        <label for="name">Description</label>
+      </p-floatLabel>
+      @if (hasError('description')) {
+        <small class="field-error">{{ getErrorMsg('description') }}</small>
+      }
+    </div>
+    <div class="flex gap-3">
+      <div>
+        <p-button label="Save" (onClick)="saveCategory()" />
+      </div>
+      <div>
+        <p-button label="Cancel" variant="text" severity="info" (onClick)="backToCategories()" />
+      </div>
+    </div>
+  </div>
+</div>

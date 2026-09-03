@@ -1,0 +1,45 @@
+.price-cell {
+  font-weight: 600;
+  color: #0f172a !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.category-pill {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.2rem 0.625rem;
+  border-radius: 1rem;
+}
+
+.stock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 1rem;
+
+  i { font-size: 0.65rem; }
+
+  &.stock-low {
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+  }
+
+  &.stock-medium {
+    color: #b45309;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+  }
+
+  &.stock-ok {
+    color: #059669;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+  }
+}

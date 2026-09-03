@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saas-back
+  namespace: saas-app
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: saas-back
+
+  template:
+    metadata:
+      labels:
+        app: saas-back
+
+    spec:
+      containers:
+        - name: saas-back
+          image: backend-saas-app:latest
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 8080
+
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+            - name: JWT_PRIVATE_KEY_PATH
+              value: /app/certs/private_key.pem
+
+            - name: JWT_PUBLIC_KEY_PATH
+              value: /app/certs/public_key.pem
+
+          envFrom:
+            - secretRef:
+                name: saas-back-secret
+          volumeMounts:
+            - name: jwt-certs
+              mountPath: /app/certs
+              readOnly: true
+
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+
+      volumes:
+        - name: jwt-certs
+          secret:
+            secretName: jwt-keys

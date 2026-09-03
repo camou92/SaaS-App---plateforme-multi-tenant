@@ -1,0 +1,71 @@
+package com.amoutech.saas.controllers;
+
+import com.amoutech.saas.common.PageResponse;
+import com.amoutech.saas.requests.ProductRequest;
+import com.amoutech.saas.responses.ProductResponse;
+import com.amoutech.saas.services.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/v1/products")
+@RequiredArgsConstructor
+@Tag(name = "Product", description = "Product API")
+public class ProductController {
+
+    private final ProductService service;
+
+    @PostMapping
+    public ResponseEntity<Void> createProduct(
+            @RequestBody
+            @Valid final ProductRequest request
+            ) {
+        service.create(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{product-id}")
+    public ResponseEntity<Void> updateProduct(
+            @RequestBody @Valid final ProductRequest request,
+            @PathVariable("product-id")
+            @NotNull(message = "Product ID cannot be null")
+            final String id
+    ){
+        service.update(id, request);
+        return ResponseEntity.accepted().build();
+    }
+
+    @GetMapping("/{product-id}")
+    public ResponseEntity<ProductResponse> findProductById(
+            @PathVariable("product-id")
+            @NotNull(message = "Product ID cannot be null")
+            final String id
+    ) {
+        return ResponseEntity.ok(service.findById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<PageResponse<ProductResponse>> findAllProducts(
+            @RequestParam(name = "page", defaultValue = "0")
+            final int page,
+            @RequestParam(name = "size", defaultValue = "10")
+            final int size
+    ){
+        return ResponseEntity.ok(service.findAll(page, size));
+    }
+
+    @DeleteMapping("/{product-id}")
+    public ResponseEntity<Void> deleteProduct(
+            @PathVariable("product-id")
+            @NotNull(message = "Product ID cannot be null")
+            final String id
+    ){
+        this.service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}

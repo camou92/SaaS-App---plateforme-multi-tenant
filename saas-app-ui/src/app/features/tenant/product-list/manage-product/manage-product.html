@@ -1,0 +1,85 @@
+<div class="manage-wrapper manage-product-wrapper">
+
+  <div class="manage-header">
+    <div class="page-icon icon-blue"><i class="pi pi-box"></i></div>
+    <div>
+      <h2>{{ productId ? 'Edit Product' : 'New Product' }}</h2>
+      <p>{{ productId ? 'Update product details' : 'Add a new product to your catalog' }}</p>
+    </div>
+  </div>
+
+  <div class="manage-card">
+    <div class="form-fields">
+
+      <div class="form-field">
+        <label class="field-label">Category</label>
+        <p-select
+          [options]="categories"
+          [(ngModel)]="selectedCategory"
+          optionLabel="name"
+          placeholder="Select a category"
+          [style]="{'width': '100%'}"
+        />
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <p-floatlabel variant="on">
+            <input pInputText id="name" name="name" [(ngModel)]="productRequest.name" autocomplete="off" class="full-width-input" />
+            <label for="name">Product Name</label>
+          </p-floatlabel>
+          @if (hasError('name')) {
+            <small class="field-error">{{ getErrorMsg('name') }}</small>
+          }
+        </div>
+        <div class="form-field">
+          <p-floatlabel variant="on">
+            <input pInputText id="reference" name="reference" [(ngModel)]="productRequest.reference" autocomplete="off" class="full-width-input" />
+            <label for="reference">Reference</label>
+          </p-floatlabel>
+          @if (hasError('reference')) {
+            <small class="field-error">{{ getErrorMsg('reference') }}</small>
+          }
+        </div>
+      </div>
+
+      <div class="form-field">
+        <p-floatlabel variant="on">
+          <input pInputText id="description" name="description" [(ngModel)]="productRequest.description" autocomplete="off" class="full-width-input" />
+          <label for="description">Description <span style="color:#94a3b8">(optional)</span></label>
+        </p-floatlabel>
+        @if (hasError('description')) {
+          <small class="field-error">{{ getErrorMsg('description') }}</small>
+        }
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <p-floatlabel variant="on">
+            <input pInputText id="price" name="price" [(ngModel)]="productRequest.price" autocomplete="off" class="full-width-input" />
+            <label for="price">Price</label>
+          </p-floatlabel>
+          @if (hasError('price')) {
+            <small class="field-error">{{ getErrorMsg('price') }}</small>
+          }
+        </div>
+        <div class="form-field">
+          <p-floatlabel variant="on">
+            <input pInputText id="alertThreshold" name="alertThreshold" [(ngModel)]="productRequest.alertThreshold" autocomplete="off" class="full-width-input" />
+            <label for="alertThreshold">Alert Threshold</label>
+          </p-floatlabel>
+          @if (hasError('alertThreshold')) {
+            <small class="field-error">{{ getErrorMsg('alertThreshold') }}</small>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <p-button [label]="productId ? 'Update Product' : 'Create Product'" icon="pi pi-check" (onClick)="saveProduct()" />
+      <p-button label="Cancel" variant="outlined" severity="secondary" (onClick)="backToCategories()" />
+    </div>
+  </div>
+
+</div>

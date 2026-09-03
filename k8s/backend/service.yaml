@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: saas-back
+  namespace: saas-app
+spec:
+  selector:
+    app: saas-back
+
+  ports:
+    - port: 8080
+      targetPort: 8080
+
+  type: ClusterIP

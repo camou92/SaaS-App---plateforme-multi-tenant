@@ -1,0 +1,76 @@
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <i class="pi pi-box"></i>
+      </div>
+      <span class="brand-name">StockFlow</span>
+    </div>
+
+    <div class="sidebar-section-label">Platform</div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-item active">
+        <i class="pi pi-users"></i>
+        <span>Tenants</span>
+      </div>
+      <div class="nav-item">
+        <i class="pi pi-chart-bar"></i>
+        <span>Analytics</span>
+        <span class="nav-soon">Soon</span>
+      </div>
+      <div class="nav-item">
+        <i class="pi pi-cog"></i>
+        <span>Settings</span>
+        <span class="nav-soon">Soon</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar">
+          <i class="pi pi-user"></i>
+        </div>
+        <div class="user-details">
+          <span class="user-name">Platform Admin</span>
+          <span class="user-role">Super Administrator</span>
+        </div>
+      </div>
+      <p-button
+        label="Logout"
+        icon="pi pi-power-off"
+        variant="text"
+        severity="danger"
+        [style]="{'width': '100%', 'justify-content': 'flex-start'}"
+        (onClick)="logout()"
+      />
+    </div>
+  </aside>
+
+  <!-- Main Area -->
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <h1 class="topbar-title">Administration</h1>
+        <div class="topbar-breadcrumb">
+          <span>Platform</span>
+          <i class="pi pi-chevron-right"></i>
+          <span class="active">Tenants</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="system-status">
+          <span class="status-dot"></span>
+          <span>System Online</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <router-outlet />
+    </div>
+  </div>
+
+</div>  

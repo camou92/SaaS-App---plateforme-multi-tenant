@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+dist/
+
+# Environment files
+.env
+.env.*
+**/.env
+**/.env.*
+
+# SAAS APP secrets
+/saas-app/certs/
+/saas-app/.env
+
+# Notes
+.notes
+notes/
+
+# Kubernetes secrets
+/k8s/secrets/jwt-keys-secret.yaml
+/k8s/secrets/secret-backend.yaml

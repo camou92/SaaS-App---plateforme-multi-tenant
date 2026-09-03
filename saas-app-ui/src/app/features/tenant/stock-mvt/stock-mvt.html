@@ -1,0 +1,141 @@
+<p-toast position="top-right" />
+
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-icon icon-green"><i class="pi pi-list"></i></div>
+    <div>
+      <h2>Stock Movements</h2>
+      <p>Select a product to view and record movements</p>
+    </div>
+  </div>
+</div>
+
+<div class="stock-layout">
+
+  <!-- Product Selector Panel -->
+  <div class="panel product-panel">
+    <div class="panel-header">
+      <h3>Products</h3>
+      <span class="panel-count">{{ products.length }} items</span>
+    </div>
+
+    @if (products && products.length > 0) {
+      <div class="product-list">
+        @for (product of products; track product.id) {
+          <div
+            class="product-row"
+            [class.selected]="selectedProduct?.id === product.id"
+            (click)="loadStockMvtsByProductId(product)"
+          >
+            <div class="product-avatar">{{ product.name?.charAt(0)?.toUpperCase() }}</div>
+            <div class="product-info">
+              <span class="product-name">{{ product.name }}</span>
+              <span class="product-ref">{{ product.reference }}</span>
+            </div>
+            <div class="product-stock">
+              @if (product.availableQuantity || 0 <= (product.alertThreshold || 0)) {
+                <span class="mini-badge badge-low">{{ product.availableQuantity }}</span>
+              } @else {
+                <span class="mini-badge badge-ok">{{ product.availableQuantity }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="panel-empty">
+        <i class="pi pi-box"></i>
+        <p>No products found</p>
+      </div>
+    }
+  </div>
+
+  <!-- Movements Panel -->
+  <div class="panel movements-panel">
+    @if (selectedProduct) {
+      <div class="panel-header">
+        <div class="panel-header-left">
+          <h3>{{ selectedProduct.name }}</h3>
+          <span class="panel-sub">{{ selectedProduct.reference }}</span>
+        </div>
+        <p-button label="Add Movement" icon="pi pi-plus" size="small" (onClick)="addStockMvt()" />
+      </div>
+
+      @if (stockMvts && stockMvts.length > 0) {
+        <div class="mvt-table-wrap">
+          <p-table [value]="stockMvts" [tableStyle]="{ 'min-width': '30rem' }">
+            <ng-template #header>
+              <tr>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Quantity</th>
+                <th>Comment</th>
+                <th style="width: 60px; text-align: center">Edit</th>
+              </tr>
+            </ng-template>
+            <ng-template #body let-mvt>
+              <tr>
+                <td>
+                  @if (mvt.typeMvt === 'IN') {
+                    <span class="mvt-badge mvt-in"><i class="pi pi-arrow-down"></i> IN</span>
+                  } @else {
+                    <span class="mvt-badge mvt-out"><i class="pi pi-arrow-up"></i> OUT</span>
+                  }
+                </td>
+                <td class="muted-cell">{{ mvt.dateMvt | date:'dd MMM yyyy' }}</td>
+                <td><strong>{{ mvt.quantity }}</strong></td>
+                <td class="muted-cell">{{ mvt.comment || '—' }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <button class="action-btn btn-edit" (click)="modifyStockMvt(mvt)" pTooltip="Edit" tooltipPosition="top">
+                      <i class="pi pi-pencil"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      } @else {
+        <div class="panel-empty">
+          <i class="pi pi-list"></i>
+          <p>No movements for this product yet</p>
+          <p-button label="Record first movement" size="small" (onClick)="addStockMvt()" />
+        </div>
+      }
+    } @else {
+      <div class="panel-empty centered">
+        <i class="pi pi-arrow-left"></i>
+        <p>Select a product to view its stock movements</p>
+      </div>
+    }
+  </div>
+
+</div>
+
+<!-- Add / Edit Dialog -->
+<p-dialog
+  [header]="selectedProduct ? 'Stock Movement — ' + selectedProduct.name : 'Stock Movement'"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '26rem' }"
+>
+  <div class="dialog-body">
+    <div class="dialog-field">
+      <label>Movement Type</label>
+      <p-select [options]="typeMvt" [(ngModel)]="selectedTypeMvt" placeholder="Select type" [style]="{'width':'100%'}" />
+    </div>
+    <div class="dialog-field">
+      <label>Quantity</label>
+      <input pInputText id="quantity" [(ngModel)]="stockMvtRequest.quantity" placeholder="Enter quantity" class="full-width-input" />
+    </div>
+    <div class="dialog-field">
+      <label>Comment <span class="optional">(optional)</span></label>
+      <input pInputText id="comment" [(ngModel)]="stockMvtRequest.comment" placeholder="Add a note" class="full-width-input" />
+    </div>
+  </div>
+  <div class="dialog-footer">
+    <p-button label="Cancel" variant="outlined" severity="secondary" (click)="visible = false" />
+    <p-button label="Save Movement" (click)="saveStockMvt()" />
+  </div>
+</p-dialog>

@@ -1,0 +1,30 @@
+mkdir -p ~/secrets/saas-app-certs
+mv ~/secrets/saas-app-certs/ saas-app/src/main/resources/certs/*.pem
+
+kubectl create secret generic jwt-keys \
+  --namespace saas-app \
+  --from-file=private_key.pem=src/main/resources/certs/private_key.pem \
+  --from-file=public_key.pem=src/main/resources/certs/public_key.pem \
+  --dry-run=client \
+  -o yaml > k8s/secrets/jwt-keys-secret.yaml
+
+
+ kubeseal \
+   --controller-name sealed-secrets \
+   --controller-namespace sealed-secrets \
+   --format yaml \
+   < k8s/secrets/jwt-keys-secret.yaml \
+   > k8s/secrets/jwt-keys-sealedsecret.yaml
+
+ kubeseal \
+   --controller-name sealed-secrets \
+   --controller-namespace sealed-secrets \
+   --format yaml \
+   < k8s/secrets/postgres-secret.yaml \
+   > k8s/secrets/postgres-sealedsecret.yaml
+
+ rm k8s/secrets/postgres-secret.yaml
+
+ kubectl port-forward svc/prometheus 9090:9090 -n saas-app
+
+ whkv lbkb ixde yztm

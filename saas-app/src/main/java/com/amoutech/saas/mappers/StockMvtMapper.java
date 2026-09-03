@@ -1,0 +1,34 @@
+package com.amoutech.saas.mappers;
+
+import com.amoutech.saas.entities.Product;
+import com.amoutech.saas.entities.StockMvt;
+import com.amoutech.saas.requests.StockMvtRequest;
+import com.amoutech.saas.responses.StockMvtResponse;
+import org.springframework.stereotype.Component;
+
+@Component
+public class StockMvtMapper {
+
+    public StockMvt toEntity(final StockMvtRequest request) {
+        return StockMvt.builder()
+                .dateMvt(request.getDateMvt())
+                .comment(request.getComment())
+                .typeMvt(request.getTypeMvt())
+                .quantity(request.getQuantity())
+                .product(Product.builder()
+                        .id(request.getProductId())
+                        .build())
+                .deleted(false)
+                .build();
+    }
+
+    public StockMvtResponse toResponse(final StockMvt entity) {
+        return StockMvtResponse.builder()
+                .id(entity.getId())
+                .dateMvt(entity.getDateMvt())
+                .comment(entity.getComment())
+                .typeMvt(entity.getTypeMvt())
+                .quantity(entity.getQuantity())
+                .build();
+    }
+}

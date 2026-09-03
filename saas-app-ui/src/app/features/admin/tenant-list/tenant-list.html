@@ -1,0 +1,269 @@
+<p-toast position="top-right" />
+
+<!-- ─── Stats Cards ─────────────────────────────────────────────────────────── -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon icon-indigo">
+      <i class="pi pi-users"></i>
+    </div>
+    <div class="stat-info">
+      <span class="stat-value">{{ tenants.length }}</span>
+      <span class="stat-label">Total Tenants</span>
+    </div>
+    <div class="stat-trend trend-up">
+      <i class="pi pi-arrow-up"></i>
+      <span>+12%</span>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon icon-green">
+      <i class="pi pi-check-circle"></i>
+    </div>
+    <div class="stat-info">
+      <span class="stat-value">24</span>
+      <span class="stat-label">Active</span>
+    </div>
+    <div class="stat-trend trend-up">
+      <i class="pi pi-arrow-up"></i>
+      <span>+5%</span>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon icon-yellow">
+      <i class="pi pi-clock"></i>
+    </div>
+    <div class="stat-info">
+      <span class="stat-value">7</span>
+      <span class="stat-label">Pending Approval</span>
+    </div>
+    <div class="stat-trend trend-neutral">
+      <i class="pi pi-minus"></i>
+      <span>No change</span>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon icon-red">
+      <i class="pi pi-ban"></i>
+    </div>
+    <div class="stat-info">
+      <span class="stat-value">3</span>
+      <span class="stat-label">Suspended</span>
+    </div>
+    <div class="stat-trend trend-down">
+      <i class="pi pi-arrow-down"></i>
+      <span>-2</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Chart + Overview ───────────────────────────────────────────────────── -->
+<div class="charts-row">
+
+  <!-- Registration Trend Chart -->
+  <div class="chart-card">
+    <div class="chart-header">
+      <div>
+        <h3>New Registrations</h3>
+        <p>Monthly tenant sign-ups over the last 6 months</p>
+      </div>
+      <div class="chart-badge">+18% vs last period</div>
+    </div>
+    <div class="bar-chart">
+      <div class="bar-group">
+        <div class="bar-wrap">
+          <div class="bar" style="height: 45%">
+            <div class="bar-tooltip">8</div>
+          </div>
+        </div>
+        <span class="bar-label">Nov</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar-wrap">
+          <div class="bar" style="height: 62%">
+            <div class="bar-tooltip">11</div>
+          </div>
+        </div>
+        <span class="bar-label">Dec</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar-wrap">
+          <div class="bar" style="height: 38%">
+            <div class="bar-tooltip">7</div>
+          </div>
+        </div>
+        <span class="bar-label">Jan</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar-wrap">
+          <div class="bar active" style="height: 80%">
+            <div class="bar-tooltip">14</div>
+          </div>
+        </div>
+        <span class="bar-label">Feb</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar-wrap">
+          <div class="bar" style="height: 68%">
+            <div class="bar-tooltip">12</div>
+          </div>
+        </div>
+        <span class="bar-label">Mar</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar-wrap">
+          <div class="bar active" style="height: 95%">
+            <div class="bar-tooltip">17</div>
+          </div>
+        </div>
+        <span class="bar-label">Apr</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Breakdown -->
+  <div class="chart-card overview-card">
+    <div class="chart-header">
+      <div>
+        <h3>Status Overview</h3>
+        <p>Tenant distribution by status</p>
+      </div>
+    </div>
+    <div class="status-breakdown">
+      <div class="breakdown-row">
+        <div class="breakdown-label">
+          <span class="breakdown-dot dot-green"></span>
+          <span>Active</span>
+        </div>
+        <div class="breakdown-bar-wrap">
+          <div class="breakdown-bar bar-green" style="width: 70%"></div>
+        </div>
+        <span class="breakdown-count">24</span>
+      </div>
+      <div class="breakdown-row">
+        <div class="breakdown-label">
+          <span class="breakdown-dot dot-yellow"></span>
+          <span>Pending</span>
+        </div>
+        <div class="breakdown-bar-wrap">
+          <div class="breakdown-bar bar-yellow" style="width: 20%"></div>
+        </div>
+        <span class="breakdown-count">7</span>
+      </div>
+      <div class="breakdown-row">
+        <div class="breakdown-label">
+          <span class="breakdown-dot dot-gray"></span>
+          <span>Inactive</span>
+        </div>
+        <div class="breakdown-bar-wrap">
+          <div class="breakdown-bar bar-gray" style="width: 8%"></div>
+        </div>
+        <span class="breakdown-count">3</span>
+      </div>
+      <div class="breakdown-row">
+        <div class="breakdown-label">
+          <span class="breakdown-dot dot-red"></span>
+          <span>Suspended</span>
+        </div>
+        <div class="breakdown-bar-wrap">
+          <div class="breakdown-bar bar-red" style="width: 8%"></div>
+        </div>
+        <span class="breakdown-count">3</span>
+      </div>
+    </div>
+    <div class="overview-total">
+      <span class="total-number">{{ tenants.length }}</span>
+      <span class="total-label">tenants loaded</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── Tenant Table ───────────────────────────────────────────────────────── -->
+<div class="table-card">
+  <div class="table-header">
+    <div>
+      <h3>Tenant Registry</h3>
+      <p>All registered organizations and their current status</p>
+    </div>
+  </div>
+
+  @if (tenants && tenants.length > 0) {
+    <p-table [value]="tenants" [tableStyle]="{ 'min-width': '60rem' }" styleClass="enhanced-table">
+      <ng-template #header>
+        <tr>
+          <th>Company</th>
+          <th>Code</th>
+          <th>Company Email</th>
+          <th>Admin</th>
+          <th>Admin Email</th>
+          <th>Status</th>
+          <th style="width: 100px; text-align: center">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-tenant>
+        <tr class="table-row">
+          <td>
+            <div class="company-cell">
+              <div class="company-avatar">{{ tenant.companyName?.charAt(0)?.toUpperCase() }}</div>
+              <span class="company-name">{{ tenant.companyName }}</span>
+            </div>
+          </td>
+          <td><span class="code-badge">{{ tenant.companyCode }}</span></td>
+          <td class="email-cell">{{ tenant.email }}</td>
+          <td>{{ tenant.adminFullName }}</td>
+          <td class="email-cell">{{ tenant.adminEmail }}</td>
+          <td>
+            @if (tenant.status === 'ACTIVE') {
+              <span class="status-badge badge-active">
+                <span class="badge-dot"></span>Active
+              </span>
+            } @else if (tenant.status === 'PENDING') {
+              <span class="status-badge badge-pending">
+                <span class="badge-dot"></span>Pending
+              </span>
+            } @else if (tenant.status === 'SUSPENDED') {
+              <span class="status-badge badge-suspended">
+                <span class="badge-dot"></span>Suspended
+              </span>
+            } @else if (tenant.status === 'INACTIVE') {
+              <span class="status-badge badge-inactive">
+                <span class="badge-dot"></span>Inactive
+              </span>
+            }
+          </td>
+          <td>
+            <div class="action-buttons">
+              @if (tenant.status === 'PENDING') {
+                <button class="action-btn btn-approve" (click)="approveTenant(tenant.tenantId)" pTooltip="Approve tenant" tooltipPosition="top">
+                  <i class="pi pi-check"></i>
+                </button>
+              } @else if (tenant.status === 'ACTIVE') {
+                <button class="action-btn btn-deactivate" (click)="deactivateTenant(tenant.tenantId)" pTooltip="Deactivate" tooltipPosition="top">
+                  <i class="pi pi-minus-circle"></i>
+                </button>
+                <button class="action-btn btn-suspend" (click)="suspendTenant(tenant.tenantId)" pTooltip="Suspend" tooltipPosition="top">
+                  <i class="pi pi-ban"></i>
+                </button>
+              } @else if (tenant.status === 'INACTIVE' || tenant.status === 'SUSPENDED') {
+                <button class="action-btn btn-activate" (click)="activateTenant(tenant.tenantId)" pTooltip="Activate" tooltipPosition="top">
+                  <i class="pi pi-play"></i>
+                </button>
+              }
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  } @else {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="pi pi-users"></i>
+      </div>
+      <h3>No tenants found</h3>
+      <p>Registered companies will appear here once they sign up.</p>
+    </div>
+  }
+</div>

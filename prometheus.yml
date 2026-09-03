@@ -1,0 +1,49 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# Configurer l'Alertmanager
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - 'alertmanager:9093'
+
+# Fichiers de règles
+rule_files:
+  - /etc/prometheus/alert.rules.yml
+
+# Scrape targets
+scrape_configs:
+
+  # Prometheus lui-même
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Postgres exporter
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+
+  # Backend Spring Boot
+  - job_name: 'saas-back'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['saas-back:8080']
+
+  # Blackbox exporter pour vérifier la santé HTTP du backend
+  - job_name: 'saas-back-blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]    # Vérifie que le code HTTP est 2xx
+    static_configs:
+      - targets:
+          - http://saas-back:8080/actuator/health
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115   # Conteneur blackbox exporter

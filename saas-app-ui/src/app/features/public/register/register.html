@@ -1,0 +1,137 @@
+<p-toast position="top-right" />
+<div class="register-bg">
+
+  <!-- Top Navigation -->
+  <div class="register-nav">
+    <div class="brand-logo">
+      <div class="logo-icon">
+        <i class="pi pi-box"></i>
+      </div>
+      <span [routerLink]="'/'" class="logo-text">StockFlow</span>
+    </div>
+  </div>
+
+  <!-- Registration Card -->
+  <div class="register-container">
+    <div class="register-card">
+
+      <div class="card-header">
+        <h1>Create your account</h1>
+        <p>Set up your company workspace and admin credentials</p>
+      </div>
+
+      <div class="sections-wrapper">
+
+        <!-- Company Info -->
+        <div class="form-section">
+          <div class="section-header">
+            <div class="section-icon icon-blue">
+              <i class="pi pi-briefcase"></i>
+            </div>
+            <div>
+              <h3>Company Information</h3>
+              <p>Details about your organization</p>
+            </div>
+          </div>
+          <div class="form-fields">
+            <div class="form-row">
+              <div class="form-field">
+                <p-floatlabel variant="on">
+                  <input pInputText id="companyName" name="companyName" [(ngModel)]="registerRequest.companyName" autocomplete="off" class="full-width-input" />
+                  <label for="companyName">Company name</label>
+                </p-floatlabel>
+                @if (hasError('companyName')) {
+                  <small class="field-error">{{ getErrorMsg('companyName') }}</small>
+                }
+              </div>
+              <div class="form-field">
+                <p-floatlabel variant="on">
+                  <input pInputText id="companyCode" name="companyCode" [(ngModel)]="registerRequest.companyCode" autocomplete="off" class="full-width-input" />
+                  <label for="companyCode">Company code</label>
+                </p-floatlabel>
+                @if (hasError('companyCode')) {
+                  <small class="field-error">{{ getErrorMsg('companyCode') }}</small>
+                }
+              </div>
+            </div>
+            <div class="form-field">
+              <p-floatlabel variant="on">
+                <input pInputText id="email" name="email" [(ngModel)]="registerRequest.email" autocomplete="off" class="full-width-input" />
+                <label for="email">Company email</label>
+              </p-floatlabel>
+              @if (hasError('email')) {
+                <small class="field-error">{{ getErrorMsg('email') }}</small>
+              }
+            </div>
+          </div>
+        </div>
+
+        <p-divider />
+
+        <!-- Admin Info -->
+        <div class="form-section">
+          <div class="section-header">
+            <div class="section-icon icon-purple">
+              <i class="pi pi-user"></i>
+            </div>
+            <div>
+              <h3>Admin Account</h3>
+              <p>Set up your administrator credentials</p>
+            </div>
+          </div>
+          <div class="form-fields">
+            <div class="form-row">
+              <div class="form-field">
+                <p-floatlabel variant="on">
+                  <input pInputText id="adminFullName" name="adminFullName" [(ngModel)]="registerRequest.adminFullName" autocomplete="off" class="full-width-input" />
+                  <label for="adminFullName">Full name</label>
+                </p-floatlabel>
+                @if (hasError('adminFullName')) {
+                  <small class="field-error">{{ getErrorMsg('adminFullName') }}</small>
+                }
+              </div>
+              <div class="form-field">
+                <p-floatlabel variant="on">
+                  <input pInputText id="adminUsername" name="adminUsername" [(ngModel)]="registerRequest.adminUsername" autocomplete="off" class="full-width-input" />
+                  <label for="adminUsername">Username</label>
+                </p-floatlabel>
+                @if (hasError('adminUsername')) {
+                  <small class="field-error">{{ getErrorMsg('adminUsername') }}</small>
+                }
+              </div>
+            </div>
+            <div class="form-field">
+              <p-floatlabel variant="on">
+                <input pInputText id="adminEmail" name="adminEmail" [(ngModel)]="registerRequest.adminEmail" autocomplete="off" class="full-width-input" />
+                <label for="adminEmail">Admin email</label>
+              </p-floatlabel>
+              @if (hasError('adminEmail')) {
+                <small class="field-error">{{ getErrorMsg('adminEmail') }}</small>
+              }
+            </div>
+            <div class="form-field">
+              <p-floatlabel variant="on">
+                <input type="password" pInputText id="adminPassword" name="adminPassword" [(ngModel)]="registerRequest.adminPassword" autocomplete="off" class="full-width-input" />
+                <label for="adminPassword">Password</label>
+              </p-floatlabel>
+              @if (hasError('adminPassword')) {
+                <small class="field-error">{{ getErrorMsg('adminPassword') }}</small>
+              }
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card-actions">
+        <p-button label="Create Account" icon="pi pi-check" iconPos="right" [style]="{'width': '100%'}" (onClick)="register()" />
+        <div class="login-link">
+          <span>Already have an account?</span>
+          <p-button label="Sign in" variant="text" severity="info" (onClick)="navigateToLogin()" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
