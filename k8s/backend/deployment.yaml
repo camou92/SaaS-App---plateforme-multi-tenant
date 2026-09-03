@@ -19,7 +19,7 @@ spec:
       containers:
         - name: saas-back
           image: backend-saas-app:latest
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
 
           ports:
             - containerPort: 8080
