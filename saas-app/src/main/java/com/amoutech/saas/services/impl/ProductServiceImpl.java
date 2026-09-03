@@ -101,12 +101,4 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    private void checkIfCategoryExistByIds(final String categoryId) {
-        final Optional<Category> category = categoryRepository.findById(categoryId);
-        if (category.isEmpty()) {
-            log.warn("Category does not exist");
-            throw new EntityNotFoundException("Category does not exist");
-        }
-    }
-
 }

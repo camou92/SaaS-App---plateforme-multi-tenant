@@ -34,7 +34,7 @@ jobs:
               - 'saas-app-ui/**'
 
             backend:
-              - 'saas-back/**'
+              - 'saas-app/**'
 
 
   # ============================================================
@@ -90,7 +90,7 @@ jobs:
       - name: Build and Push Backend
         uses: docker/build-push-action@v6
         with:
-          context: ./saas-back
+          context: ./saas-app
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/backend-saas-app:${{ github.sha }}
