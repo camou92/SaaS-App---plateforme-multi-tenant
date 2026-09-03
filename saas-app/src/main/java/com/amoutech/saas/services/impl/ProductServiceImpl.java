@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
         final Optional<Product> productExists = productRepository.findById(id);
         if (productExists.isEmpty()) {
             log.warn("Productss does not exist");
-            throw new EntityNotFoundException("Product does not exist");
+            throw new EntityNotFoundException("Productss does not exist");
         }
 
         // check if product already exists

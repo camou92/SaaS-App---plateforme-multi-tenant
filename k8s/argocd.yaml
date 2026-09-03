@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/camou92/LinkedIn-System---Microservices-Platform
+    repoURL: https://github.com/camou92/SaaS-App---plateforme-multi-tenant
     targetRevision: main
     path: k8s/
     directory:
